@@ -7,12 +7,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;       //microsoft Excel 14 object in references-> COM tab
 
-class Sandbox
+
+class Parameters
+{
+    public int Reg_num { get; set; }
+    public double Reg_numValue { get; set; }
+    //public string? Reg_flagValue { get; set; }
+    //public int Group { get; set; }
+}
+
+
+
+class Sandbox : Parameters
 {
     Excel.Application app = new Excel.Application();
     Excel.Workbook wb;
     Excel.Worksheet ws;
     Excel.Range range;
+
+    List<Parameters> parameters = new List<Parameters>();
     public Sandbox(string path)
     {
         this.app = new Excel.Application();
@@ -23,14 +36,31 @@ class Sandbox
 
     public void readFromExcel()
     {
-        for (int i = 1; i <= range.Rows.Count; i++)
+        for (int i = 2; i <= range.Rows.Count; i++)
         {
+            Parameters param = new Parameters();
             for (int j = 1; j <= range.Columns.Count; j++)
             {
-                Console.Write(range.Cells[i, j].Value);
-                Console.Write('\t');
+                switch(j)
+                {
+                    case 1:
+                        param.Reg_num = Convert.ToInt32(range.Cells[i,j].Value); break;
+                    
+                    case 2: param.Reg_numValue = Convert.ToDouble(range.Cells[i,j].Value); break;
+                }
             }
-            Console.WriteLine('\n');
+
+            parameters.Add(param);        
+        }
+    }
+
+    public void displayList()
+    {
+        for(int i = 0; i < parameters.Count; i++)
+        {
+            Console.Write(parameters[i].Reg_num);
+            Console.Write('\t');
+            Console.WriteLine(parameters[i].Reg_numValue);
         }
     }
 
@@ -57,6 +87,7 @@ class Sandbox
 
         Sandbox s = new Sandbox(path);
         s.readFromExcel();
+        s.displayList();
         s.cleanup();
     }
 }
