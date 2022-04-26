@@ -50,7 +50,8 @@ class Sandbox : Parameters
                 }
             }
 
-            parameters.Add(param);        }
+            parameters.Add(param);        
+        }
     }
 
     public void displayList()
