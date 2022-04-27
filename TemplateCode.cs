@@ -7,25 +7,33 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using Excel_CS_Sandbox;
+using Excel_CS;
 
 
-public partial class Sandbox_Template : Excel_CS_Sandbox.Sandbox_Template
+namespace Excel_CS_Sandbox
 {
-    public Sandbox_Template()
+    public partial class Sandbox_Template 
     {
-
+        private Excel_CS.Sandbox param;
+        public Sandbox_Template(Excel_CS.Sandbox p) { this.param = p; }
     }
 }
-
-
 
 class Template_Main
 {
     public static void Main(String[] args)
     {
-        Sandbox_Template templateObj = new Sandbox_Template();
+        string path = @"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Example.xlsx";
+
+        Excel_CS.Sandbox parameterObj = new Excel_CS.Sandbox(path);
+        parameterObj.readFromExcel();
+
+
+        var templateObj = new Excel_CS_Sandbox.Sandbox_Template(parameterObj);
         String pageContent = templateObj.TransformText();
-        System.IO.File.WriteAllText(@"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\outputPage.txt", pageContent);
+        System.IO.File.WriteAllText(@"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\outputPage.ls", pageContent);
+
+        parameterObj.cleanup();
     }
 }
     
