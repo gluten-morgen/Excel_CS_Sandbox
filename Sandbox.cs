@@ -11,10 +11,13 @@ namespace Excel_CS
 {
     public class Parameters
     {
-        public int Reg_num { get; set; }
-        public double Reg_numValue { get; set; }
+        public int reg_num { get; set; }
+        public double reg_numValue { get; set; }
+
         //public string? Reg_flagValue { get; set; }
         //public int Group { get; set; }
+
+        public List<Parameters> param_list = new();
     }
 
 
@@ -26,7 +29,7 @@ namespace Excel_CS
         Excel.Worksheet ws;
         Excel.Range range;
 
-        List<Parameters> parameters = new List<Parameters>();
+        //List<Parameters> parameters = new List<Parameters>();
         public Sandbox(string path= @"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Example.xlsx")
         {
             this.app = new Excel.Application();
@@ -44,23 +47,23 @@ namespace Excel_CS
                 {
                     switch (j)
                     {
-                        case 1: param.Reg_num = Convert.ToInt32(range.Cells[i, j].Value); break;
+                        case 1: param.reg_num = Convert.ToInt32(range.Cells[i, j].Value); break;
 
-                        case 2: param.Reg_numValue = Convert.ToDouble(range.Cells[i, j].Value); break;
+                        case 2: param.reg_numValue = Convert.ToDouble(range.Cells[i, j].Value); break;
                     }
                 }
 
-                parameters.Add(param);
+                param_list.Add(param);
             }
         }
 
         public void displayList()
         {
-            for (int i = 0; i < parameters.Count; i++)
+            for (int i = 0; i < param_list.Count; i++)
             {
-                Console.Write(parameters[i].Reg_num);
+                Console.Write(param_list[i].reg_num);
                 Console.Write('\t');
-                Console.WriteLine(parameters[i].Reg_numValue);
+                Console.WriteLine(param_list[i].reg_numValue);
             }
         }
 

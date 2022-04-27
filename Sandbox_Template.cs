@@ -28,7 +28,23 @@ namespace Excel_CS_Sandbox
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n\r\nHello World!");
+            this.Write("\r\n:\t!---------------------------------------;\r\n:\t!\t\t\t\tTemplate\t\t\t\t;\t\r\n:\t!--------" +
+                    "-------------------------------;\r\n:\t;\r\n");
+            
+            #line 12 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+ for (int i = 0; i < param.param_list.Count; i++)  
+	{
+		Write(":\tR[");
+		Write(Convert.ToString(param.param_list[i].reg_num));
+		Write(":Test]=\t");
+		Write(Convert.ToString(param.param_list[i].reg_numValue));
+		Write("\t;");
+		Write("\r\n");
+	}
+
+            
+            #line default
+            #line hidden
             return this.GenerationEnvironment.ToString();
         }
     }
