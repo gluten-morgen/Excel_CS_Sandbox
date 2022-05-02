@@ -14,8 +14,8 @@ namespace Excel_CS_Sandbox
 {
     public partial class Sandbox_Template 
     {
-        private Excel_CS.Sandbox param;
-        public Sandbox_Template(Excel_CS.Sandbox p) { this.param = p; }
+        private Excel_CS.Sandbox register;
+        public Sandbox_Template(Excel_CS.Sandbox reg) { this.register = reg; }
     }
 }
 
@@ -25,15 +25,15 @@ class Template_Main
     {
         string path = @"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Example.xlsx";
 
-        Excel_CS.Sandbox parameterObj = new Excel_CS.Sandbox(path);
-        parameterObj.readFromExcel();
+        Excel_CS.Sandbox registerObj = new Excel_CS.Sandbox(path);
+        registerObj.readFromExcel();
 
 
-        var templateObj = new Excel_CS_Sandbox.Sandbox_Template(parameterObj);
+        var templateObj = new Excel_CS_Sandbox.Sandbox_Template(registerObj);
         String pageContent = templateObj.TransformText();
         System.IO.File.WriteAllText(@"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\outputPage.ls", pageContent);
 
-        parameterObj.cleanup();
+        registerObj.cleanup();
     }
 }
     
