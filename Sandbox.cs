@@ -2,37 +2,36 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using Excel = Microsoft.Office.Interop.Excel;       //microsoft Excel 14 object in references-> COM tab
 
 namespace Excel_CS
 {
-    public class Parameters
+    public class Register
     {
-        public int reg_num { get; set; }
-        public double reg_numValue { get; set; }
+        public string ID { get; set; } = string.Empty;
+        public string value { get; set; } = string.Empty;
+        public bool isFlag { get; set; }
+        public int section { get; set; }
 
-        //public string? Reg_flagValue { get; set; }
-        //public int Group { get; set; }
-
-        public List<Parameters> param_list = new();
+        public List<Register> reg_list = new();
     }
 
 
 
-    public class Sandbox : Parameters
+    public class Sandbox : Register
     {
         Excel.Application app = new Excel.Application();
         Excel.Workbook wb;
         Excel.Worksheet ws;
         Excel.Range range;
 
-        //List<Parameters> parameters = new List<Parameters>();
-        public Sandbox(string path= @"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Example.xlsx")
+        public Sandbox(string path = @"C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Example.xlsx")
         {
             this.app = new Excel.Application();
+
             wb = app.Workbooks.Open(path);
             ws = wb.Sheets[1];
             range = ws.UsedRange;
@@ -40,30 +39,54 @@ namespace Excel_CS
 
         public void readFromExcel()
         {
-            for (int i = 2; i <= range.Rows.Count; i++)
+            int row_count = range.Rows.Count;
+            int col_count = range.Columns.Count;
+            string temp;
+
+            for (int i = 2; i <= row_count; i++)
             {
-                Parameters param = new Parameters();
-                for (int j = 1; j <= range.Columns.Count; j++)
+                Register reg = new Register();
+                for (int j = 1; j <= col_count; j++)
                 {
                     switch (j)
                     {
-                        case 1: param.reg_num = Convert.ToInt32(range.Cells[i, j].Value); break;
+                        case 1: reg.ID = Convert.ToString(range.Cells[i, j].Value); break;
 
-                        case 2: param.reg_numValue = Convert.ToDouble(range.Cells[i, j].Value); break;
+                        case 2: reg.value = Convert.ToString(range.Cells[i, j].Value); break;
+
+                        case 3:
+                            temp = Convert.ToString(range.Cells[i, j].Value);
+                            temp = temp.ToLower();
+                            if (temp.Equals("true"))
+                                {
+                                    reg.isFlag = true;
+                                }
+                            else
+                                {
+                                    reg.isFlag = false;
+                                }
+                            break;
+
+                        case 4: 
+                            reg.section = Convert.ToInt16(range.Cells[i, j].Value); break;
                     }
                 }
 
-                param_list.Add(param);
+                reg_list.Add(reg);
             }
         }
 
         public void displayList()
         {
-            for (int i = 0; i < param_list.Count; i++)
+            for (int i = 0; i < reg_list.Count; i++)
             {
-                Console.Write(param_list[i].reg_num);
+                Console.Write(reg_list[i].ID);
                 Console.Write('\t');
-                Console.WriteLine(param_list[i].reg_numValue);
+                Console.Write(reg_list[i].value);
+                Console.Write('\t');
+                Console.Write(reg_list[i].isFlag);
+                Console.Write('\t');
+                Console.WriteLine(reg_list[i].section);
             }
         }
 
@@ -84,7 +107,7 @@ namespace Excel_CS
     }
 }
 
-/*class Program_Main
+class Program_Main
 {
     static void Main(string[] args)
     {
@@ -94,7 +117,6 @@ namespace Excel_CS
         s.readFromExcel();
         s.displayList();
         s.cleanup();
-
     }
 
-}*/
+}

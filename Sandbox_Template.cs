@@ -28,25 +28,119 @@ namespace Excel_CS_Sandbox
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n:\t!---------------------------------------;\r\n:\t!\t\t\t\tTemplate\t\t\t\t;\t\r\n:\t!--------" +
-                    "-------------------------------;\r\n:\t;\r\n");
+            this.Write("\r\n");
+            
+            #line 7 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+  int current_section = 0; 
+            
+            #line default
+            #line hidden
+            this.Write(":\t!---------------------------------------;\r\n:\t!\t\t\t\tTemplate\t\t\t\t;\t\r\n:\t!----------" +
+                    "-----------------------------;\r\n:\t;\r\n");
             
             #line 12 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
- for (int i = 0; i < param.param_list.Count; i++)  
-	{
-		Write(":\tR[");
-		Write(Convert.ToString(param.param_list[i].reg_num));
-		Write(":Test]=\t");
-		Write(Convert.ToString(param.param_list[i].reg_numValue));
-		Write("\t;");
-		Write("\r\n");
-	}
-
+ for (int i = 0; i < register.reg_list.Count; i++)  {
+            
+            #line default
+            #line hidden
+            
+            #line 13 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+		if (register.reg_list[i].section - current_section > 0) {
+			print_sectionComment(register.reg_list[i].section);
+			current_section = register.reg_list[i].section;
+		}
+            
+            #line default
+            #line hidden
+            
+            #line 17 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+		if(register.reg_list[i].isFlag) { 
+            
+            #line default
+            #line hidden
+            this.Write(":\t");
+            
+            #line 18 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(register.reg_list[i].ID));
+            
+            #line default
+            #line hidden
+            this.Write(" = (");
+            
+            #line 18 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(register.reg_list[i].value));
+            
+            #line default
+            #line hidden
+            this.Write(") ;\r\n");
+            
+            #line 19 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+		} else { 
+            
+            #line default
+            #line hidden
+            this.Write(":\t");
+            
+            #line 20 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(register.reg_list[i].ID));
+            
+            #line default
+            #line hidden
+            this.Write(" = ");
+            
+            #line 20 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(register.reg_list[i].value));
+            
+            #line default
+            #line hidden
+            this.Write(" ;\r\n");
+            
+            #line 21 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+		}	
+            
+            #line default
+            #line hidden
+            
+            #line 22 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+ }  
             
             #line default
             #line hidden
             return this.GenerationEnvironment.ToString();
         }
+        
+        #line 23 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+ private void print_sectionComment(int sec_num) { 
+        
+        #line default
+        #line hidden
+        
+        #line 23 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+this.Write(":\t;\r\n:\t!### Section ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 25 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(sec_num));
+
+        
+        #line default
+        #line hidden
+        
+        #line 25 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+this.Write(" : Test Section ### ;\r\n:\t;\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 27 "C:\Users\Avi\Documents\Visual Studio 2022\Excel_CS\Excel_CS_sandbox\Sandbox_Template.tt"
+ }  
+        
+        #line default
+        #line hidden
     }
     
     #line default
